@@ -1,56 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>OUTFIT DAY COLLECTION</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js"></script>
+    <style>
+      body {
+        margin: 0;
+        background-color: #EFE1C6; /* Pantone Buttercream */
+        font-family: Georgia, serif;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="let estado = "inicio";
+let coleccionActual = -1;
+let colecciones = [];
+let scrollY = 0;
+let velocidadScroll = 20;
+let videos = [];
 
-<head>
-  <!-- 
-      This is an HTML comment
-      You can write text in a comment and the content won't be visible in the page
-    -->
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  textFont("Georgia");
+  textAlign(CENTER, CENTER);
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="https://glitch.com/favicon.ico" />
+  // nombres de ejemplo (pondrás los tuyos)
+  colecciones = [
+    "ELEGANT 1/2",
+    "PLASTIC SOUL",
+    "DON’T SCROLL",
+    "HYPERBURN",
+    "SOFT DAMAGE",
+    "TOXIC MINT",
+    "LOVELY ERROR",
+    "FAKE BODY",
+    "EXCESS",
+    "NATURAL ADDICT",
+    "INVISIBLE",
+    "DOLL SKIN",
+    "COLD PINK",
+    "HUMAN RESET",
+    "DIGITAL FLESH",
+    "PURE ERROR",
+    "GLASS MIND",
+    "ICONIC WASTE",
+    "HEAVY SCENT",
+    "CANDY VOID",
+    "ABSURD BEAUTY",
+    "WET FACE",
+    "LUXURY TRASH",
+    "DISORDER"
+  ];
+}
 
-  <!--
-      This is the page head - it contains info the browser uses
-      Like the title, which appears on the browser tab but not inside the page
-      Further down you'll see the content that displays in the page
-    -->
-  <title>Hello World!</title>
+function draw() {
+  background("#EFE1C6");
 
-  <!-- The website stylesheet -->
-  <link rel="stylesheet" href="/style.css" />
+  if (estado === "inicio") {
+    mostrarLista();
+  } else if (estado === "coleccion") {
+    mostrarColeccion();
+  }
+}
 
-  <!-- The website JavaScript file -->
-  <script src="/script.js" defer></script>
-</head>
+function mostrarLista() {
+  fill(0);
+  textSize(24);
+  textAlign(LEFT, TOP);
+  text("OUTFIT DAY COLLECTION", 40, 30);
 
-<body>
-  <!--
-      The body includes the content you see in the page
-      Each element is defined using tags, like this <div></div>
-      The attributes like class="wrapper" let us style elements in the CSS
-    -->
-  <div class="wrapper">
-    <div class="content" role="main">
-      <h1 class="title">Oh hi website!</h1>
-      <img src="/cool-website.svg" class="illustration" alt="cool website" />
-      <div class="instructions">
-        <p>
-          Fork <a href="https://github.com/glitchdotcom/website-to-compute">this project</a> and open it in a GitHub Codespace.
-        </p>
-        <p> Follow the steps in the README to deploy your new website to Fastly in a few steps!
-        </p>
+  textSize(22);
+  textAlign(CENTER, CENTER);
 
-      </div>
+  let startY = 100 + scrollY;
 
-      <footer class="footer">
-        <div>
-          <a class="remix" href="https://github.com/glitchdotcom/website-to-compute">🚧 Get your own site</a>
-        </div>
-      </footer>
-    </div>
-  </div>
-</body>
+  for (let i = 0; i < colecciones.length; i++) {
+    let y = startY + i * 60;
+    if (y > -50 && y < height + 50) {
+      text(colecciones[i], width / 2, y);
+      if (mouseIsPressed && dist(mouseX, mouseY, width / 2, y) < 100) {
+        coleccionActual = i;
+        estado = "coleccion";
+      }
+    }
+  }
+}
 
+function mostrarColeccion() {
+  fill(0);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text(colecciones[coleccionActual], width / 2, 60);
+
+  // Aquí puedes mostrar tu video
+  textSize(18);
+  text("(Aquí se mostrará el video de la colección)", width / 2, height / 2);
+
+  // Botón volver
+  textSize(16);
+  textAlign(LEFT, BOTTOM);
+  text("← Volver", 40, height - 40);
+
+  if (mouseIsPressed && mouseX < 150 && mouseY > height - 100) {
+    estado = "inicio";
+  }
+}
+
+function mouseWheel(event) {
+  scrollY -= event.delta / 2;
+  scrollY = constrain(scrollY, -colecciones.length * 60 + height - 100, 0);
+}"></script>
+  </body>
 </html>
